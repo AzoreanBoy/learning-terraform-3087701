@@ -52,8 +52,8 @@ module "blog_autoscaling" {
     name_prefix   = "blog"
     image_id      = data.aws_ami.app_ami.id
     instance_type = var.instance_type
+  }
     
-
 }
 
 module "blog_alb" {

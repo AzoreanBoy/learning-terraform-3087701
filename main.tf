@@ -48,6 +48,7 @@ resource "aws_instance" "blog" {
 
 module "alb" {
   source = "terraform-aws-modules/alb/aws"
+  version = "9.17.0"
 
   name    = "blog-alb"
 
@@ -55,7 +56,7 @@ module "alb" {
 
   vpc_id  = module.blog_vpc.vpc_id
   subnets = module.blog_vpc.public_subnets
-  security_groups = module.blog_sg.security_group_id
+  security_groups = [module.blog_sg.security_group_id]
 
   target_groups = {
     ex-instance = {
@@ -67,7 +68,7 @@ module "alb" {
     }
   }
 
-  http_tcp_listener = [
+  http_tcp_listeners = [
     {
     port = 80
     protocol = "HTTP"

@@ -1,0 +1,4 @@
+.terraform/providers/registry.terraform.io/hashicorp/aws/6.0.0/windows_386/terraform-provider-aws_v6.0.0_x5.exe
+.terraform.lock.hcl
+.terraform/modules/modules.json
+.terraform/providers/registry.terraform.io/hashicorp/aws/6.0.0/windows_386/LICENSE.txt

@@ -24,7 +24,7 @@ jobs:
           WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}
           WIKI_API_URL: ${{ vars.WIKI_API_URL }}
           WIKI_PAGE_ID: ${{ vars.WIKI_PAGE_ID }}
-          path: "Pedro/nova-pagina"
+          PATH: "Pedro/nova-pagina"
         run: |
           echo "🔍 Reading README.md content..."
           CONTENT=$(cat README.md | jq -Rs .)
@@ -64,7 +64,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$(jq -n \
               --arg query "$GRAPHQL_QUERY" \
-              --argjson variables "{\"id\": $WIKI_PAGE_ID, \"content\": $CONTENT, \"path\": $path}" \
+              --argjson variables "{\"id\": $WIKI_PAGE_ID, \"content\": $CONTENT, \"path\": $PATH}" \
               '{query: $query, variables: $variables}')"
           echo "✅ JSON payload built:"
           echo "$JSON_PAYLOAD"

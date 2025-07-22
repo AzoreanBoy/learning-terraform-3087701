@@ -30,12 +30,13 @@ jobs:
           echo "✅ README content loaded."
 
           echo "🔧 Preparing GraphQL query..."
-          read -r -d '' GRAPHQL_QUERY <<EOF
-          mutation UpdatePage(\$id: Int!, \$content: String!) {
+          
+          read -r -d '' GRAPHQL_QUERY <<'EOF'
+          mutation UpdatePage($id: Int!, $content: String!) {
             pages {
               update(
-                id: \$id,
-                content: \$content,
+                id: $id,
+                content: $content,
                 description: "README atualizado",
                 editor: "markdown",
                 isPrivate: false,

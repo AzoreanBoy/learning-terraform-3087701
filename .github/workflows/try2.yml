@@ -64,7 +64,7 @@ jobs:
             -H "Content-Type: application/json" \
             -d "$(jq -n \
               --arg query "$GRAPHQL_QUERY" \
-              --argjson variables "{\"id\": $WIKI_PAGE_ID, \"content\": $CONTENT}" \
+              --argjson variables "{\"id\": $WIKI_PAGE_ID, \"content\": $CONTENT, \"path\": $path}" \
               '{query: $query, variables: $variables}')"
           echo "✅ JSON payload built:"
           echo "$JSON_PAYLOAD"

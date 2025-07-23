@@ -32,7 +32,6 @@ jobs:
           echo "✅ README content loaded."
           echo "::endgroup::"
 
-
           echo "::group::🔧 Preparing GraphQL query..."
           GRAPHQL_QUERY=$(cat << EOF
           mutation {
@@ -59,26 +58,18 @@ jobs:
           EOF
           )
           echo "✅ GraphQL query prepared."
-
-          echo " "
-          echo $GRAPHQL_QUERY
-          echo " "
           echo "::endgroup::"
           
           echo "::group::🔧 Preparing JSON PAYLOAD..."
           JSON_PAYLOAD=$(jq -n --arg q "$GRAPHQL_QUERY" '{query: $q}')
           echo "✅ JSON PAYLOAD prepared."
-
-          echo $JSON_PAYLOAD
-          echo " "
-          echo "$JSON_PAYLOAD" | jq .
           echo "::endgroup::"
 
-          echo "🚀 Sending request to Wiki.js API..."
+          echo "::group::🚀 Sending request to Wiki.js API..."
           curl -X POST $WIKI_API_URL \
             -H "Authorization: Bearer $WIKI_API_TOKEN" \
             -H "Content-Type: application/json" \
             --data "$JSON_PAYLOAD"
-          
+          echo "::endgroup::"
           
 

@@ -1,5 +1,5 @@
 
-name: Upload README to WIKI.js (Steps)
+name: Upload README to WIKI.js
 
 on:
   # Starts the workflow when the commit make changes to a MarkDown file

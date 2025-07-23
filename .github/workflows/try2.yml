@@ -56,7 +56,7 @@ jobs:
           echo "✅ GraphQL query prepared."
 
           echo $GRAPHQL_QUERY
-          
+
           echo "GRAPHQL_QUERY<<EOF" >> $GITHUB_ENV
           echo "$GRAPHQL_QUERY" >> $GITHUB_ENV
           echo "EOF" >> $GITHUB_ENV
@@ -82,7 +82,7 @@ jobs:
           curl -X POST $WIKI_API_URL \
             -H "Authorization: Bearer $WIKI_API_TOKEN" \
             -H "Content-Type: application/json" \
-            -d "$JSON_PAYLOAD"
+            -d "{\"query\": \"$GRAPHQL_QUERY\"}"
           
           
 

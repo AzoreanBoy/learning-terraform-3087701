@@ -59,7 +59,7 @@ jobs:
           
           TAGS=$(echo "$RESPONSE" | jq -c '[.data.pages.single.tags[].tag]')
           echo "✅ Tags fetched: $TAGS"
-          echo "TAGS=$TAGS_JSON" >> "$GITHUB_ENV"
+          echo "TAGS=$TAGS" >> "$GITHUB_ENV"
           echo "::endgroup::"
 
 

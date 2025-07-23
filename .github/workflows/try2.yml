@@ -69,9 +69,7 @@ jobs:
           curl -X POST $WIKI_API_URL \
             -H "Authorization: Bearer $WIKI_API_TOKEN" \
             -H "Content-Type: application/json" \
-            -d '{
-              "query": $GRAPHQL_QUERY
-            }'
+            -d "{\"query\": \"$GRAPHQL_QUERY\"}"
           
           
 

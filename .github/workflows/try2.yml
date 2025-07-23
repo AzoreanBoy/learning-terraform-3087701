@@ -27,11 +27,13 @@ jobs:
           WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}
           WIKI_API_URL: ${{ vars.WIKI_API_URL }}
         run: |
-          echo "🔍 Reading README.md content..."
+          echo "::group::🔍 Reading README.md content..."
           CONTENT=$(cat README.md | jq -Rs .)
           echo "✅ README content loaded."
+          echo "::endgroup::"
 
-          echo "🔧 Preparing GraphQL query..."
+
+          echo "::group::🔧 Preparing GraphQL query..."
           GRAPHQL_QUERY=$(cat << EOF
           mutation {
             pages {
@@ -61,12 +63,16 @@ jobs:
           echo " "
           echo $GRAPHQL_QUERY
           echo " "
-
-          echo "🔧 Preparing JSON PAYLOAD..."
+          echo "::endgroup::"
+          
+          echo "::group::🔧 Preparing JSON PAYLOAD..."
           JSON_PAYLOAD=$(jq -n --arg q "$GRAPHQL_QUERY" '{query: $q}')
           echo "✅ JSON PAYLOAD prepared."
 
           echo $JSON_PAYLOAD
+          echo " "
+          echo "$JSON_PAYLOAD" | jq .
+          echo "::endgroup::"
 
           echo "🚀 Sending request to Wiki.js API..."
           curl -X POST $WIKI_API_URL \

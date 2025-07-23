@@ -31,18 +31,18 @@ jobs:
           echo "✅ README content loaded."
 
           echo "🔧 Preparing GraphQL query..."
-          GRAPHQL_QUERY=$(cat <<'EOF'
-          mutation UpdatePage($id: Int!, $content: String!, $path: String!) {
+          GRAPHQL_QUERY=$(cat << EOF
+          mutation {
             pages {
               update(
                 id: $id,
-                content: $content,
+                content: $CONTENT,
                 description: "README atualizado",
                 editor: "markdown",
                 isPrivate: false,
                 isPublished: true,
                 locale: "en",
-                path: $path,
+                path: $PAGE_PATH,
                 tags: ["updated"]
               ) {
                 responseResult {

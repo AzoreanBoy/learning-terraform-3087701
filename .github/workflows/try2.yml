@@ -45,7 +45,7 @@ jobs:
                 isPrivate: false,
                 isPublished: true,
                 locale: "en",
-                path: $PAGE_PATH,
+                path: "$PAGE_PATH",
                 tags: ["updated"]
               ) {
                 responseResult {

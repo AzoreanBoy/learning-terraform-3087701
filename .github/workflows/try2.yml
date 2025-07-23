@@ -79,7 +79,7 @@ jobs:
           curl -X POST $WIKI_API_URL \
             -H "Authorization: Bearer $WIKI_API_TOKEN" \
             -H "Content-Type: application/json" \
-            --data "$JSON_PAYLOAD"
+            --data "$JSON_PAYLOAD" | jq
           echo "::endgroup::"
           
 

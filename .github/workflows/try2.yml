@@ -56,6 +56,11 @@ jobs:
           echo "✅ GraphQL query prepared."
 
           echo $GRAPHQL_QUERY
+          
+          echo "GRAPHQL_QUERY<<EOF" >> $GITHUB_ENV
+          echo "$GRAPHQL_QUERY" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
+
       
       
       # Upload to Wiki

@@ -2,7 +2,7 @@
 name: Upload README to WIKI.js (Steps)
 
 on:
-  # Starts the workflow when
+  # Starts the workflow when the commit make changes to a MarkDown file
   push:
     paths:
       - '**.md'
@@ -14,7 +14,6 @@ jobs:
     runs-on: ubuntu-latest
     environment: dev #Selection of the Environment
     steps:
-      # Check Out the README file to workspace
       - name: Checkout README file
         uses: actions/checkout@v4
         with:
@@ -70,7 +69,6 @@ jobs:
           echo "GRAPHQL_QUERY="$GRAPHQL_QUERY >> "$GITHUB_ENV"
           echo Done
       
-      # Upload to Wiki
       - name: Upload README.md to Wiki.js
         env:
           WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}

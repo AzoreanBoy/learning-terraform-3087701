@@ -17,12 +17,15 @@ jobs:
           sparse-checkout: |
             README.md
           sparse-checkout-cone-mode: true
-
-      # Read Content from README and build the query
-      - name: Read Content from README and Build GRAPHQL_QUERY
+      
+      
+      # Upload to Wiki
+      - name: Upload README.md to Wiki.js
         env:
           WIKI_PAGE_ID: ${{ vars.WIKI_PAGE_ID }}
           PAGE_PATH: ${{ vars.PAGE_PATH }}
+          WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}
+          WIKI_API_URL: ${{ vars.WIKI_API_URL }}
         run: |
           echo "🔍 Reading README.md content..."
           CONTENT=$(cat README.md | jq -Rs .)
@@ -55,22 +58,9 @@ jobs:
           )
           echo "✅ GraphQL query prepared."
 
+          echo " "
           echo $GRAPHQL_QUERY
-
-          echo "GRAPHQL_QUERY<<EOF" >> $GITHUB_ENV
-          echo "$GRAPHQL_QUERY" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
-
-      
-      
-      # Upload to Wiki
-      - name: Upload README.md to Wiki.js
-        env:
-          WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}
-          WIKI_API_URL: ${{ vars.WIKI_API_URL }}
-        run: |
-          echo GRAPHQL_QUERY
-          echo $GRAPHQL_QUERY
+          echo " "
 
           echo "🔧 Preparing JSON PAYLOAD..."
           JSON_PAYLOAD=$(jq -n --arg q "$GRAPHQL_QUERY" '{query: $q}')

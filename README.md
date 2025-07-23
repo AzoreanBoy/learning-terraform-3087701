@@ -1,5 +1,6 @@
 # Learning Terraform
 This is the repository for the LinkedIn Learning course Learning Terraform. The full course is available from [LinkedIn Learning][lil-course-url].
+Updated from Github and Pushed trough github also.
 
 ![Learning Terraform][lil-thumbnail-url] 
 

@@ -67,7 +67,7 @@ jobs:
           echo "::endgroup::"
 
           echo "📤 Send Query to GITHUB ENV"
-          echo "GRAPHQL_QUERY=$GRAPHQL_QUERY" >> "$GITHUB_ENV"
+          echo "GRAPHQL_QUERY="$GRAPHQL_QUERY >> "$GITHUB_ENV"
           echo Done
       
       # Upload to Wiki

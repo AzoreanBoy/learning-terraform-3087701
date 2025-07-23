@@ -4,6 +4,8 @@ name: Upload README to WIKI.js (Steps)
 on:
   # Starts the workflow when the commit make changes to a MarkDown file
   push:
+    branches:
+      - main
     paths:
       - '**.md'
   # Allows you to run this workflow manually from the Actions tab

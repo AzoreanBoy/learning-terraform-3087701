@@ -1,0 +1,85 @@
+# Simple workflow for deploying static content to GitHub Pages
+name: Upload README to WIKI.js
+
+on:
+  # Starts the workflow when
+  push:
+    paths:
+      - '**.md'
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-readme:
+    runs-on: ubuntu-latest
+    environment: dev #Selection of the Environment
+    steps:
+      # Check Out the README file to workspace
+      - name: Checkout README file
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            README.md
+          sparse-checkout-cone-mode: true
+      
+      
+      # Upload to Wiki
+      - name: Upload README.md to Wiki.js
+        env:
+          WIKI_PAGE_ID: ${{ vars.WIKI_PAGE_ID }}
+          PAGE_PATH: ${{ vars.PAGE_PATH }}
+          WIKI_API_TOKEN: ${{ secrets.WIKI_API_TOKEN }}
+          WIKI_API_URL: ${{ vars.WIKI_API_URL }}
+        run: |
+          echo "::group::🔍 Reading README.md content..."
+          CONTENT=$(cat README.md | jq -Rs .)
+          echo "✅ README content loaded."
+          echo "::endgroup::"
+
+          echo "::group::🔧 Preparing GraphQL query..."
+          GRAPHQL_QUERY=$(cat << EOF
+          mutation {
+            pages {
+              update(
+                id: $WIKI_PAGE_ID,
+                content: $CONTENT,
+                description: "README atualizado",
+                editor: "markdown",
+                isPrivate: false,
+                isPublished: true,
+                locale: "en",
+                path: "$PAGE_PATH",
+                tags: ["updated"]
+              ) {
+                responseResult {
+                  succeeded
+                  slug
+                  message
+                }
+                page{
+                  id
+                  title
+                  path
+                  updatedAt
+                }
+              }
+            }
+          }
+          EOF
+          )
+          echo "✅ GraphQL query prepared."
+          echo "::endgroup::"
+          
+          echo "::group::🔧 Preparing JSON PAYLOAD..."
+          JSON_PAYLOAD=$(jq -n --arg q "$GRAPHQL_QUERY" '{query: $q}')
+          echo "✅ JSON PAYLOAD prepared."
+          echo "::endgroup::"
+
+          echo "::group::🚀 Sending request to Wiki.js API..."
+          curl -X POST $WIKI_API_URL \
+            -H "Authorization: Bearer $WIKI_API_TOKEN" \
+            -H "Content-Type: application/json" \
+            --data "$JSON_PAYLOAD" | jq
+          echo "::endgroup::"
+          
+

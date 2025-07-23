@@ -57,44 +57,12 @@ jobs:
           )
           echo "✅ GraphQL query prepared."
 
-          echo GRAPHQL_QUERY
+          echo $GRAPHQL_QUERY
       
       
       # Upload to Wiki
       - name: Upload README.md to Wiki.js
         run: |
-          echo "🔍 Reading README.md content..."
-          CONTENT=$(cat README.md | jq -Rs .)
-          echo "✅ README content loaded."
-
-          echo "🔧 Preparing GraphQL query..."
-          
-          GRAPHQL_QUERY=$(cat <<'EOF'
-          mutation UpdatePage($id: Int!, $content: String!, $path: String!) {
-            pages {
-              update(
-                id: $id,
-                content: $content,
-                description: "README atualizado",
-                editor: "markdown",
-                isPrivate: false,
-                isPublished: true,
-                locale: "en",
-                path: $path,
-                tags: ["updated"]
-              ) {
-                responseResult {
-                  succeeded
-                  slug
-                  message
-                }
-              }
-            }
-          }
-          EOF
-          )
-          echo "✅ GraphQL query prepared."
-
           echo "📦 Building JSON payload..."
           curl -X POST "$WIKI_API_URL" \
             -H "Authorization: Bearer $WIKI_API_TOKEN" \
